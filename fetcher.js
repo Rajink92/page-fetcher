@@ -23,4 +23,16 @@ const getResource = (serverAddress, localPath) => {
     });
   });
 };
+const pageFetcher = () => {
+  const input = process.argv.slice(2);
+  const [server, path] = [input[0], input[1]];
+  if (fs.existsSync(path)) {
+    rl.question(`${path} already exist, do you want to confinue? (press y)`, (answer) => {
+      if (answer.toLowerCase() === 'y') {
+        getResource(server, path);
+      } else process.exit();
+    });
+  } else getResource(server, path);
+};
 
+pageFetcher();
